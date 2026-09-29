@@ -22,10 +22,9 @@
 - [5. Les PC reçoivent leur adresse par DHCP](#5-les-pc-reçoivent-leur-adresse-par-dhcp)
 - [6. Relier les deux réseaux](#6-relier-les-deux-réseaux)
 - [7. Les tests](#7-les-tests)
-- [8. Bonus : le DHCP vu dans Wireshark](#8-bonus--le-dhcp-vu-dans-wireshark)
-- [9. Les problèmes rencontrés (et comment je les ai réglés)](#9-les-problèmes-rencontrés-et-comment-je-les-ai-réglés)
-- [10. Ce que j'ai appris](#10-ce-que-jai-appris)
-- [11. Pour aller plus loin](#11-pour-aller-plus-loin)
+- [8. Les problèmes rencontrés (et comment je les ai réglés)](#8-les-problèmes-rencontrés-et-comment-je-les-ai-réglés)
+- [9. Ce que j'ai appris](#9-ce-que-jai-appris)
+- [10. Pour aller plus loin](#10-pour-aller-plus-loin)
 - [Récap : toutes les commandes](#récap--toutes-les-commandes)
 
 ---
@@ -39,19 +38,19 @@
 | Cisco IOS (CLI) | `hostname`, configuration d'interfaces, `no shutdown`, sauvegarde avec `wr` |
 | DHCP | Un serveur DHCP sur chaque routeur, exclusion de l'adresse du routeur, vérification des baux |
 | Routage | Routes statiques pour faire communiquer deux réseaux |
-| Tests et dépannage | `ping`, `show ip interface brief`, `show ip route`, lecture du TTL, capture Wireshark |
+| Tests et dépannage | `ping`, `show ip interface brief`, `show ip route`, lecture du TTL |
 
 ---
 
 ## 1. L'environnement
 
-- **GNS3 2.2.61** sous Windows (avec WinPCAP, Npcap et **Wireshark** pour pouvoir capturer le trafic)
+- **GNS3 2.2.61** sous Windows
 - **Routeurs** : Cisco 7200 émulés (image IOS `c7200-adventerprisek9-mz.152-4.M11`, IOS 15.2)
 - **Switchs** : switchs Ethernet intégrés à GNS3
 - **PC** : VPCS (PC virtuels très légers, parfaits pour tester le DHCP et le ping)
 
-![Figure 2 — Installation de GNS3 : choix des composants, dont Wireshark pour les captures](images/02-installation-composants.png)
-*Figure 2 — Installation de GNS3 : je garde les outils (WinPCAP, Npcap, Wireshark) pour pouvoir capturer le trafic plus tard.*
+![Figure 2 — Installation de GNS3 : choix des composants](images/02-installation-composants.png)
+*Figure 2 — Installation de GNS3 : choix des composants à installer.*
 
 ![Figure 3 — Ajout du modèle de routeur c7200 et calcul de l'Idle-PC](images/03-template-c7200-idle-pc.png)
 *Figure 3 — Ajout du routeur c7200. L'**Idle-PC** évite que le routeur émulé utilise 100 % d'un cœur du processeur.*
@@ -136,7 +135,7 @@ R2_JP# wr
 ```
 
 ![Figure 7 — Configuration DHCP de R2 (pool LAN2)](images/07-r2-show-run-dhcp.png)
-*Figure 7 — Le pool `LAN2` de R2. (La ligne `excluded-address` visible ici est un reste d'erreur, expliqué dans la partie 9.3.)*
+*Figure 7 — Le pool `LAN2` de R2. (La ligne `excluded-address` visible ici est un reste d'erreur, expliqué dans la partie 8.3.)*
 
 ---
 
@@ -240,39 +239,23 @@ Côté PC, **rien à changer** : la passerelle reçue par DHCP (`default-router`
 
 ---
 
-## 8. Bonus : le DHCP vu dans Wireshark
-
-J'ai lancé une capture sur le câble **R1 ↔ Switch1** pendant le démarrage des PC. On y voit les 4 étapes du DHCP, qu'on appelle **DORA** :
-
-| Temps | Source → Destination | Message | Explication |
-|---|---|---|---|
-| 0,00 s | `0.0.0.0` → `255.255.255.255` | **D**iscover | Le PC (qui n'a pas encore d'adresse) crie à tout le réseau : « y a-t-il un serveur DHCP ? » |
-| 0,02 s | R1 → réseau (ARP) | *vérification* | R1 vérifie que `192.168.69.2` n'est pas déjà utilisée (pas de réponse = libre) |
-| 2,02 s | `192.168.69.9` → `192.168.69.2` | **O**ffer | R1 propose l'adresse `192.168.69.2` |
-| 3,01 s | `0.0.0.0` → `255.255.255.255` | **R**equest | Le PC répond : « je la prends » |
-| 3,03 s | `192.168.69.9` → `192.168.69.2` | **A**CK | R1 confirme : l'adresse est attribuée ✔ |
-
-*Extrait de la capture pour PC1 (MAC `00:50:79:66:68:00`). Juste après, le PC envoie 3 ARP sur sa propre adresse pour vérifier qu'il n'y a pas de doublon, puis ses premiers pings vers R1 réussissent.*
-
----
-
-## 9. Les problèmes rencontrés (et comment je les ai réglés)
+## 8. Les problèmes rencontrés (et comment je les ai réglés)
 
 Tout n'a pas marché du premier coup, et c'est là que j'ai le plus appris.
 
-### 9.1 Fautes de frappe dans les commandes
+### 8.1 Fautes de frappe dans les commandes
 
 ![Figure 15 — Erreur « Invalid input » à cause d'un masque mal tapé](images/15-erreur-masque.png)
 *Figure 15 — `255 .255.2555.0` : un espace et un 5 de trop, IOS refuse la commande et le `^` montre où est l'erreur.*
 
 **Solution** : lire le `^`, retaper la commande correctement. J'ai aussi appris les raccourcis (`conf t`, `int gi1/0`, `ip add`, `sh ip int br`).
 
-### 9.2 Interface qui ne monte pas
+### 8.2 Interface qui ne monte pas
 
 ![Figure 16 — L'interface passe à « up » après no shutdown](images/16-interface-up.png)
 *Figure 16 — Après `no shutdown`, les messages `%LINK-3-UPDOWN … changed state to up` confirment que l'interface est allumée.*
 
-### 9.3 Le PC4 ne reçoit pas d'adresse (« Can't find dhcp server »)
+### 8.3 Le PC4 ne reçoit pas d'adresse (« Can't find dhcp server »)
 
 ![Figure 17 — PC4 ne trouve pas de serveur DHCP et ne joint pas sa passerelle](images/17-pc4-dhcp-echec.png)
 *Figure 17 — PC4 ne trouve pas de DHCP, et même avec une IP fixe il ne joint pas `192.168.70.11`.*
@@ -298,7 +281,7 @@ R2_JP(config)# end
 R2_JP# wr
 ```
 
-### 9.4 Le projet GNS3 s'ouvre sur une page blanche
+### 8.4 Le projet GNS3 s'ouvre sur une page blanche
 
 ![Figure 19 — GNS3 ouvert sur une page vide, sans la topologie](images/19-gns3-page-blanche.png)
 *Figure 19 — Un jour, GNS3 s'est ouvert sans rien : ni topologie, ni appareils.*
@@ -309,15 +292,15 @@ R2_JP# wr
 
 ---
 
-## 10. Ce que j'ai appris
+## 9. Ce que j'ai appris
 
 - **Un routeur relie des réseaux différents** : c'est pour ça qu'on a besoin d'un plan d'adressage clair *avant* de commencer.
 - **Le DHCP n'est pas magique** : le pool doit correspondre au réseau de l'interface, et il faut exclure l'adresse du routeur.
 - **Le routage va dans les deux sens** : une route pour l'aller, une pour le retour.
 - **Vérifier à chaque étape** (`show ip interface brief`, `show ip route`, `show ip dhcp binding`, `ping`) permet de trouver une erreur tout de suite au lieu de chercher partout à la fin.
-- **Le TTL et Wireshark** permettent de *prouver* ce qui se passe réellement sur le réseau.
+- **Le TTL** permet de *prouver* que les paquets passent bien par les routeurs.
 
-## 11. Pour aller plus loin
+## 10. Pour aller plus loin
 
 - [ ] Remplacer les routes statiques par du **routage dynamique (OSPF)**
 - [ ] Ajouter un serveur **DNS** dans les pools DHCP (`dns-server`)
