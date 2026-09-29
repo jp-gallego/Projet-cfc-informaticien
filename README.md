@@ -14,20 +14,20 @@ Mon profil et mon CV : [jp-gallego.github.io](https://jp-gallego.github.io) · [
 
 | Projet | En deux mots |
 | --- | --- |
-| [**ESXi et vCenter sur un vrai serveur**](ESXi-vCenter/) | J'ai installé l'hyperviseur ESXi sur un serveur rack HP ProLiant, créé des datastores et une VM Windows Server 2025, puis déployé vCenter pour gérer les hôtes. |
 | [**Réseau sous GNS3 : 2 routeurs Cisco et DHCP**](Reseau-GNS3-routage-DHCP/) | Deux réseaux, chacun avec son routeur qui distribue les adresses (DHCP), reliés par des routes statiques. Avec les pannes que j'ai eues et comment je les ai trouvées. |
+| [**ESXi et vCenter sur un vrai serveur**](ESXi-vCenter/) | J'ai installé l'hyperviseur ESXi sur un serveur rack HP ProLiant, créé des datastores et une VM Windows Server 2025, puis déployé vCenter pour gérer les hôtes. |
+| [**Déployer des postes avec une image système**](Projet-5-Deploiement-image-systeme/) | Un poste Windows 10 de référence, généralisé avec Sysprep, capturé puis redéployé avec Clonezilla. Pour 10 postes, ça fait gagner plusieurs heures. |
+| [**Un poste partagé par plusieurs élèves**](Projet-2-Poste-multi-utilisateurs/) | Un compte par élève, dossiers cloisonnés avec les droits NTFS, verrouillage de session et règles de mots de passe, puis tests avec chaque compte. |
 | [**Installer Windows et Ubuntu avec une clé USB**](Installation-Windows-Ubuntu-cle-USB/) | Clé bootable avec Rufus, passage par le BIOS pour démarrer dessus, installation de Windows 11 puis d'Ubuntu sur un vrai PC. |
-| [**Windows 11 sur VMware Workstation**](Installation-Windows-11-VMware/) | Création de la VM, TPM virtuel, installation de Windows 11 et contournement de la connexion réseau obligatoire au premier démarrage. |
 
 ## Autres projets de formation
 
-Les rapports de mes projets du cours IT Essentials, si vous voulez voir plus en détail :
+Si vous voulez voir plus en détail :
 
+- [Windows 11 sur VMware Workstation (TPM virtuel, installation hors ligne)](Installation-Windows-11-VMware/)
 - [Projet 1 – Mise en service d'un poste pour un cabinet comptable](Projet-1-Mise-en-service-poste/)
-- [Projet 2 – Poste multi-utilisateurs (droits NTFS, verrouillage)](Projet-2-Poste-multi-utilisateurs/)
 - [Projet 3 – Migration et réinstallation d'un poste](Projet-3-Migration-poste/)
 - [Projet 4 – Dépannage d'une carte réseau](Projet-4-Depannage-poste/)
-- [Projet 5 – Déploiement d'un poste par image système (Sysprep, Clonezilla)](Projet-5-Deploiement-image-systeme/)
 
 ---
 
