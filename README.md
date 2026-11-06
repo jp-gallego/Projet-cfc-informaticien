@@ -25,6 +25,7 @@ Mon profil et mon CV : [jp-gallego.github.io](https://jp-gallego.github.io) · [
 
 Si vous voulez voir plus en détail :
 
+- [Site web GIT Pen : site vitrine d'un stylo codé à la main en HTML, CSS et JavaScript, à deux](Site-web-GIT-Pen/)
 - [Mon premier réseau sous GNS3 : 2 routeurs Cisco et DHCP](Reseau-GNS3-routage-DHCP/)
 - [Un poste partagé par plusieurs élèves (droits NTFS, verrouillage, mots de passe)](Projet-2-Poste-multi-utilisateurs/)
 - [Installer Windows et Ubuntu avec une clé USB](Installation-Windows-Ubuntu-cle-USB/)
