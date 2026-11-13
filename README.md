@@ -2,7 +2,7 @@
 
 Salut, moi c'est Jean-Pierre Gallego Santillan. J'ai 25 ans, j'habite à Lausanne et je suis en 1re année d'apprentissage CFC informaticien au Geneva Institute of Technology depuis septembre 2026.
 
-Avant ça, j'ai été électricien pendant 5 ans (CFC d'électricien). Sur les chantiers, je tirais déjà des câbles CAT 6/7 et de la fibre, je raccordais des prises et des racks et je testais les liaisons. Aujourd'hui, je me reconvertis dans l'informatique.
+Avant ça, j'ai été électricien pendant 5 ans (CFC d'électricien de montage). Sur les chantiers, je tirais déjà des câbles CAT 6/7 et de la fibre, je raccordais des prises et des racks et je testais les liaisons. Aujourd'hui, je me reconvertis dans l'informatique.
 
 **Je cherche un stage en systèmes, réseaux et infrastructure, entre Lausanne et Genève.**
 
